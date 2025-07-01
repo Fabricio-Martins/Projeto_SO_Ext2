@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include "../utils/utils.h"
+#include "info.h"
+
+void info_command()
+{
+    printf("\nExt2 File System Information:\n\n");
+    printf("Name of Volume: %.16s\n", superblock.volume_name);
+    printf("Image size: %u bytes\n", BLOCK_SIZE * superblock.blocks_count);
+    printf("Free space: %u KiB\n", (superblock.free_blocks_count * BLOCK_SIZE) / 1024);
+    printf("Free blocks: %u\n", superblock.free_blocks_count);
+    printf("Free inodes: %u\n", superblock.free_inodes_count);
+    printf("Block size: %u bytes\n", BLOCK_SIZE);
+    printf("Inode size: %u bytes\n", superblock.inode_size);
+    printf("Groups count: %u\n", (superblock.blocks_count / superblock.blocks_per_group));
+    printf("Groups size: %u blocks\n", superblock.blocks_per_group);
+    printf("Groups inodes: %u inodes\n", superblock.inodes_per_group);
+    printf("Inodetable size: %u blocks\n\n", superblock.inodes_per_group * superblock.inode_size / BLOCK_SIZE);
+}
