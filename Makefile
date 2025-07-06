@@ -6,9 +6,11 @@ OBJ_DIR := 	.exec
 
 SRCS    :=	main.c \
 			utils.c \
-			$(OPS_DIR)/commands.c
+			$(OPS_DIR)/ext2-operations.c
 
-OBJS    := 	$(patsubst %.c,$(OBJ_DIR)/%.o,$(notdir $(SRCS)))
+OBJS    := 	$(OBJ_DIR)/main.o \
+			$(OBJ_DIR)/utils.o \
+			$(OBJ_DIR)/ext2-operations.o
 
 TARGET  := 	main
 IMG     := 	myext2image.img

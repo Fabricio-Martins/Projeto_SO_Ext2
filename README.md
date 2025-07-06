@@ -1,89 +1,78 @@
-## Detalhes de Implementação
+# Projeto EXT2 - Sistemas Operacionais
 
-- **Linguagem utilizada:** C/C++.
+## Descrição
 
-- **Restrições:** Não utilizar chamadas para funções do sistema (ex: `system()`, `exec()`) nem estruturas EXT2 prontas de bibliotecas ou da internet.
+Este projeto implementa funcionalidades do sistema de arquivos EXT2 como parte da disciplina de Sistemas Operacionais.
 
-- **Simplificações permitidas:**
-  - Sintaxe dos comandos pode ser simplificada (ex: não tratar múltiplos diretórios como `rm dir1/dir2/file.txt`).
-  - Não há arquivos maiores que 64 MiB.
-  - Tamanho fixo de bloco: 1024 bytes.
-  - Apenas diretórios que usam 1 bloco para armazenar entradas de diretório são tratados.
-- **Limitações:**
-  - Não é necessário processar arquivos com ponteiros triplamente indiretos.
-  - Escrita de entradas em arquivos de diretório limitada ao tamanho do bloco.
-  - Leitura de arquivos de diretório apenas com ponteiros diretos.
+## Objetivos
 
-## Comandos
+- Compreender a estrutura do sistema de arquivos EXT2
+- Implementar operações básicas de manipulação de arquivos
+- Aplicar conceitos de sistemas operacionais na prática
 
-Experimente os comandos abaixo no shell interativo:
+## Funcionalidades Implementadas
 
-- [x] **info** — Exibe informações do disco e do sistema de arquivos
-- [x] **cat &lt;file&gt;** — Mostra o conteúdo de um arquivo
-- [x] **attr &lt;file | dir&gt;** — Exibe atributos de arquivo/diretório
-- [x] **cd &lt;path&gt;** — Muda o diretório atual
-- [x] **ls** — Lista arquivos e diretórios
-- [x] **pwd** — Mostra o caminho absoluto do diretório atual
-- [x] **touch &lt;file&gt;** — Cria um arquivo vazio
-- [x] **mkdir &lt;dir&gt;** — Cria um diretório vazio
-- [x] **rm &lt;file&gt;** — Remove um arquivo
-- [x] **rmdir &lt;dir&gt;** — Remove um diretório vazio
-- [x] **rename &lt;file&gt; &lt;newfilename&gt;** — Renomeia um arquivo
-- [x] **cp &lt;source_path&gt; &lt;target_path&gt;** — Copia arquivo da imagem para o sistema real
-- [x] **print [ superblock | groups | inode ]**: exibe informações do sistema EXT2.
+### Operações a serem implementadas
 
-> 💡 **Dicas rápidas:**
->
-> - Comandos (1) a (6): apenas leitura da imagem.
-> - Comandos (7) a (11): escrita na imagem.
-> - Comandos (12) e (13): interagem entre a imagem EXT2 e o sistema real (use caminhos absolutos).
-> - Comando (14): apenas print da estrutura
+1. **info**: Exibe informações do disco e do sistema de arquivos.
+2. **cat &lt;file&gt;**: Exibe o conteúdo de um arquivo em formato texto.
+3. **attr &lt;file | dir&gt;**: Exibe os atributos de um arquivo (`file`) ou diretório (`dir`).
+4. **cd &lt;path&gt;**: Altera o diretório corrente para o definido em `path`.
+5. **ls**: Lista os arquivos e diretórios do diretório corrente.
+6. **pwd**: Exibe o diretório corrente (caminho absoluto).
+7. **touch &lt;file&gt;**: Cria o arquivo `file` com conteúdo vazio.
+8. **mkdir &lt;dir&gt;**: Cria o diretório `dir` vazio.
+9. **rm &lt;file&gt;**: Remove o arquivo `file` do sistema.
+10. **rmdir &lt;dir&gt;**: Remove o diretório `dir`, se estiver vazio.
+11. **rename &lt;file&gt; &lt;newfilename&gt;**: Renomeia o arquivo `file` para `newfilename`.
+12. **cp &lt;source_path&gt; &lt;target_path&gt;**: Copia um arquivo de origem (`source_path`) para destino (`target_path`).
 
----
-
-## Compilação e Execução
-
-1. Compile:
+## Como Compilar
 
 ```bash
 make
 ```
 
-2. Execute:
+## Como Executar
 
 ```bash
 ./main <imagem.img>
 ```
 
----
+## Comandos e Estrutura do Volume `myext2image.img`
 
-## Comandos e estrutura da imagem
-
-Gerando imagens ext2 (64MiB com blocos de 1K):
+### Gerando Imagens EXT2 (64MiB com blocos de 1K)
 
 ```bash
 dd if=/dev/zero of=./myext2image.img bs=1024 count=64K
-```
-
-```bash
 mkfs.ext2 -b 1024 ./myext2image.img
 ```
 
-Verificando a integridade de um sistema ext2:
+### Verificando a Integridade do Sistema EXT2
 
 ```bash
 e2fsck myext2image.img
 ```
 
-Montando a imagem do volume com ext2:
+### Montando a Imagem do Volume com EXT2
 
 ```bash
 sudo mount myext2image.img /mnt
 ```
 
-Estrutura original de arquivos do volume (comando tree via bash)
+### Estrutura Original de Arquivos do Volume
 
-Desmontando a imagem do volume com ext2:
+Comando utilizado: `tree`
+
+### Informações de Espaço
+
+Comando utilizado: `df`
+
+- **Blocos de 1K:** 62186
+- **Usado:** 26777 KiB
+- **Disponível:** 32133 KiB
+
+### Desmontando a Imagem do Volume com EXT2
 
 ```bash
 sudo umount /mnt
