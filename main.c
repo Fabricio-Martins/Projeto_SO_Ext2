@@ -176,8 +176,6 @@ int main(int argc, char **argv)
     // Valida número de argumentos da linha de comando
     if (argc != 2)
     {
-        fprintf(stderr, "Uso: %s <imagem_ext2>\n", argv[0]);
-        fprintf(stderr, "Exemplo: %s filesystem.ext2\n", argv[0]);
         return EXIT_FAILURE;
     }
 
@@ -186,7 +184,6 @@ int main(int argc, char **argv)
     if (!fs)
     {
         fprintf(stderr, "Erro ao abrir a imagem '%s': %s\n", argv[1], strerror(errno));
-        fprintf(stderr, "Verifique se o arquivo existe e é uma imagem EXT2 válida.\n");
         return EXIT_FAILURE;
     }
 
@@ -212,7 +209,6 @@ int main(int argc, char **argv)
         {
             // EOF detectado (Ctrl+D) ou erro de leitura
             putchar('\n');
-            printf("Finalizando shell...\n");
             break;
         }
 
@@ -227,7 +223,6 @@ int main(int argc, char **argv)
         // Trata comandos especiais de saída
         if (strcmp(argvv[0], "exit") == 0 || strcmp(argvv[0], "quit") == 0)
         {
-            printf("\nSaindo do shell EXT2...\n\n");
             break;
         }
 
@@ -245,15 +240,7 @@ int main(int argc, char **argv)
         // Verifica se o comando foi encontrado
         if (!cmd)
         {
-            fprintf(stderr, "Comando '%s' não encontrado.\n", argvv[0]);
-            fprintf(stderr, "Comandos disponíveis: ");
-
-            // Lista comandos disponíveis para ajudar o usuário
-            for (struct command_entry *ce = cmd_table; ce->name; ++ce)
-            {
-                fprintf(stderr, "%s ", ce->name);
-            }
-            fprintf(stderr, "exit quit\n");
+            printf("command not found.\n");
             continue;
         }
 
@@ -271,6 +258,5 @@ int main(int argc, char **argv)
 
     // Limpa recursos antes de encerrar
     fs_close(fs);
-    printf("Shell EXT2 finalizado.\n");
     return EXIT_SUCCESS;
 }
