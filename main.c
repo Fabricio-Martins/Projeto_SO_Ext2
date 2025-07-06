@@ -196,9 +196,6 @@ int main(int argc, char **argv)
     // Buffer para armazenar a linha de comando digitada pelo usuário
     char line[MAX_BUFFER_SHELL];
 
-    printf("Shell EXT2 iniciado. Digite 'exit' ou 'quit' para sair.\n");
-    printf("Use 'info' para ver informações do filesystem.\n\n");
-
     // Loop principal do shell
     while (1)
     {
