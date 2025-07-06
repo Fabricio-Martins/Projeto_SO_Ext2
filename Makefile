@@ -1,22 +1,36 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -g
-INCLUDES = -I. -Icmd
+CC      := 	gcc
+CFLAGS  := 	-Wall -g -Iinclude
 
-SRCS = 	main-shell.c \
-		utils/utils.c \
-		cmd/info/info.c \
-		cmd/cat/cat.c \
+OPS_DIR := 	ops
+OBJ_DIR := 	.exec
 
-OBJS = $(SRCS:.c=.o)
-TARGET = main-shell
+SRCS    :=	main.c \
+			utils.c \
+			$(OPS_DIR)/commands.c
+
+OBJS    := 	$(patsubst %.c,$(OBJ_DIR)/%.o,$(notdir $(SRCS)))
+
+TARGET  := 	main
+IMG     := 	myext2image.img
+
+.PHONY: all clean shell
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+$(OBJ_DIR)/%.o: $(OPS_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
+
+shell: all
+	./$(TARGET) $(IMG)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf $(OBJ_DIR) $(TARGET)
