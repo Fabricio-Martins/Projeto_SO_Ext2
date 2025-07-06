@@ -6,6 +6,7 @@
 #include "../structs.h"
 
 #define BLOCK_SIZE 1024
+#define NAME_LENGHT 255
 
 extern FILE *image_file;
 extern char image_path[256];

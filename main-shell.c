@@ -4,6 +4,7 @@
 #include "utils/utils.h"
 #include "cmd/info/info.h"
 #include "cmd/cat/cat.h"
+#include "cmd/ls/ls.h"
 
 #define CMD_BUFFER_SIZE 128
 
@@ -38,6 +39,10 @@ int main(int argc, char *argv[])
         {
             char *arg = cmd + 4;
             cat_command(arg);
+        }
+        else if (strcmp(cmd, "ls") == 0)
+        {
+            ls_command();
         }
         else
         {

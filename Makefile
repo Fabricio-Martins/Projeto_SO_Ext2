@@ -6,6 +6,8 @@ SRCS = 	main-shell.c \
 		utils/utils.c \
 		cmd/info/info.c \
 		cmd/cat/cat.c \
+		cmd/ls/ls.c \
+
 
 OBJS = $(SRCS:.c=.o)
 TARGET = main-shell
